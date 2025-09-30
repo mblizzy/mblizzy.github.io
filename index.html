@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Michael Black - Digital Card</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Courier New", monospace;
+        background-color: #000;
+        color: #22c55e;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 384px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      .header {
+        padding: 24px 16px 16px 16px;
+        text-align: center;
+        border-bottom: 1px solid rgba(34, 197, 94, 0.3);
+      }
+
+      .profile-pic {
+        width: 64px;
+        height: 64px;
+        border: 1px solid #22c55e;
+        background-color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px auto;
+        font-size: 20px;
+        font-weight: bold;
+        color: #22c55e;
+      }
+
+      .main-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 4px;
+        color: #22c55e;
+      }
+
+      .subtitle {
+        color: #86efac;
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .location {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #22c55e;
+        font-size: 12px;
+      }
+
+      .newsletter-section {
+        padding: 16px;
+        padding-top: 16px;
+      }
+
+      .newsletter-card {
+        border: 1px solid rgba(168, 85, 247, 0.5);
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 16px;
+        text-align: center;
+      }
+
+      .newsletter-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #a855f7;
+        margin-bottom: 8px;
+      }
+
+      .newsletter-text {
+        color: #c084fc;
+        font-size: 14px;
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+
+      .newsletter-btn {
+        border: 1px solid #a855f7;
+        background-color: #000;
+        color: #a855f7;
+        padding: 8px 16px;
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+      }
+
+      .newsletter-btn:hover {
+        background-color: #a855f7;
+        color: #000;
+      }
+
+      .cards-section {
+        padding: 24px 16px;
+      }
+
+      .card {
+        border: 1px solid rgba(34, 197, 94, 0.5);
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 16px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .card:hover {
+        border-color: #22c55e;
+        background-color: rgba(34, 197, 94, 0.05);
+      }
+
+      .card.active {
+        border-color: #22c55e;
+        background-color: rgba(34, 197, 94, 0.05);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .card-icon {
+        padding: 8px;
+        border: 1px solid #22c55e;
+        background-color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .card-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #22c55e;
+        margin-bottom: 4px;
+      }
+
+      .card-subtitle {
+        color: #86efac;
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+
+      .card-description {
+        color: #bbf7d0;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .card-details {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(34, 197, 94, 0.3);
+        display: none;
+      }
+
+      .card-details.active {
+        display: block;
+      }
+
+      .detail-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        color: #bbf7d0;
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+
+      .bullet {
+        color: #22c55e;
+        margin-top: 4px;
+      }
+
+      .contact-section {
+        margin-top: 24px;
+      }
+
+      .contact-card {
+        border: 1px solid rgba(34, 197, 94, 0.5);
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 16px;
+      }
+
+      .contact-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #22c55e;
+        margin-bottom: 12px;
+        text-align: center;
+      }
+
+      .contact-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: #bbf7d0;
+        text-decoration: none;
+        font-size: 14px;
+        margin-bottom: 8px;
+        transition: all 0.2s;
+      }
+
+      .contact-link:hover {
+        border-color: #22c55e;
+        background-color: rgba(34, 197, 94, 0.05);
+      }
+
+      .icon {
+        width: 16px;
+        height: 16px;
+        color: #22c55e;
+      }
+
+      .small-icon {
+        width: 12px;
+        height: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="profile-pic">MB</div>
+      <h1 class="main-title">M. BLACK</h1>
+      <p class="subtitle">
+        System Planning Engineer • AI Pioneer • Underground Artist
+      </p>
+      <div class="location">
+        <span>Philadelphia | Miami | Reno | Costa Rica</span>
+      </div>
+    </div>
+
+    <div class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-card">
+          <h3 class="newsletter-title">Weekly Updates</h3>
+          <p class="newsletter-text">
+            Stay connected with my latest projects, events, and ventures. From
+            software development to Burning Man to music exploration.
+          </p>
+          <a
+            href="https://mblizzy.substack.com/subscribe"
+            target="_blank"
+            class="newsletter-btn"
+          >
+            Subscribe
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards-section">
+      <div class="container">
+        <div class="card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">💻</div>
+            <div class="card-content">
+              <h3 class="card-title">Full Stack Development</h3>
+              <p class="card-subtitle">AI-Powered Solutions</p>
+              <p class="card-description">
+                Strategic business consulting and software development
+                leveraging cutting-edge AI and emerging technologies.
+              </p>
+            </div>
+          </div>
+          <div class="card-details">
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Full stack web development</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>AI integration & automation</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Strategic business consulting</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Future tech implementation</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">⚡</div>
+            <div class="card-content">
+              <h3 class="card-title">Electrical Engineer</h3>
+              <p class="card-subtitle">System Planning • Off-Grid Solutions</p>
+              <p class="card-description">
+                Power systems expertise in renewable energy, transmission
+                planning, distributed energy resources, and off-grid solutions.
+              </p>
+            </div>
+          </div>
+          <div class="card-details">
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Solar & wind technology</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Transmission planning</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Distributed energy resources</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Off-grid energy solutions</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Datacenter Optimization</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">👥</div>
+            <div class="card-content">
+              <h3 class="card-title">Community Builder</h3>
+              <p class="card-subtitle">
+                Experiential Design • Event Curation • Mentorship
+              </p>
+              <p class="card-description">
+                Creating transformative experiences and learning environments
+                where creativity, technology, and human connection intersect.
+              </p>
+            </div>
+          </div>
+          <div class="card-details">
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Experiential design & curation</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Event curation & production</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Mentorship & coaching</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Warehouse community management</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Immersive experience design</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">🎵</div>
+            <div class="card-content">
+              <h3 class="card-title">Sonic Exploration</h3>
+              <p class="card-subtitle">House • Techno • Breaks</p>
+              <p class="card-description">
+                Curating immersive experiences that bring together underground
+                music culture, technology, and community connection.
+              </p>
+            </div>
+          </div>
+          <div class="card-details">
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Underground venue performances</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>TouchDesigner audio-visual integration</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Bitwig production & live performance</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Circuit bending & hardware modification</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Mobile listening room curation</span>
+            </div>
+            <div class="detail-item">
+              <span class="bullet">•</span>
+              <span>Community sonic experiences</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-section">
+          <div class="contact-card">
+            <h3 class="contact-title">Contact</h3>
+            <a href="mailto:mikeblack.career@gmail.com" class="contact-link">
+              <span class="icon">✉️</span>
+              <span>Email</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/mike-black-41984890/"
+              class="contact-link"
+            >
+              <span class="icon">💼</span>
+              <span>LinkedIn</span>
+            </a>
+            <a
+              href="https://www.instagram.com/phillymike_"
+              class="contact-link"
+            >
+              <span class="icon">📸</span>
+              <span>Instagram</span>
+            </a>
+            <a href="https://soundcloud.com/mikeymike1122" class="contact-link">
+              <span class="icon">🎶</span>
+              <span>SoundCloud</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleCard(card) {
+        const details = card.querySelector(".card-details");
+        const isActive = card.classList.contains("active");
+
+        // Close all other cards
+        document.querySelectorAll(".card").forEach((c) => {
+          c.classList.remove("active");
+          c.querySelector(".card-details").classList.remove("active");
+        });
+
+        // Toggle current card if it wasn't active
+        if (!isActive) {
+          card.classList.add("active");
+          details.classList.add("active");
+        }
+      }
+    </script>
+  </body>
+</html>
